@@ -456,7 +456,7 @@ struct UnionFind {
 <i>Pseudocode:</i>
 
 ```
-sort all edges according to their weight
+sort all edges in ascending order according to their weight
 initialize a set with Union Find structure
 
 for each edge in graph:
