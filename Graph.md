@@ -88,7 +88,7 @@ while queue is not empty:
 
 ```c++
 queue<int> q;
-q.insert(source_node);
+q.push(source_node);
 
 while(!q.empty()){
     int node = q.front();
@@ -98,7 +98,7 @@ while(!q.empty()){
 
     for (int neighbor : adjList[node]){
         if (!visited[neighbor])
-            q.insert(neighbor);
+            q.push(neighbor);
     }
 }
 ```
@@ -107,7 +107,7 @@ while(!q.empty()){
 
 ```c++
 queue<int> q;
-q.insert(source_node);
+q.push(source_node);
 
 while(!q.empty()){
     int node = q.front();
@@ -117,7 +117,7 @@ while(!q.empty()){
 
     for (int neighbor=0;neightbor<N;neighbor++){
         if (!visited[neighbor] && adjMat[node][neighbor] != 0)
-            q.insert(neighbor);
+            q.push(neighbor);
     }
 }
 ```
@@ -130,7 +130,7 @@ while(!q.empty()){
 vector<pair<int,int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
 queue<pair<int,int>> q;
-q.insert(source_row, source_col);
+q.push(source_row, source_col);
 
 while(!q.empty()){
     auto [curr_row, curr_col] = q.front();
@@ -145,7 +145,7 @@ while(!q.empty()){
         if (next_row < 0 || next_col < 0 || next_row >= ROW || next_col >= COL || visited[next_row][next_col])
             continue;
 
-        q.insert(next_row, next_col);
+        q.push(next_row, next_col);
     }
 }
 ```
