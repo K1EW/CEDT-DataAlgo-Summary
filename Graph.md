@@ -59,6 +59,7 @@ void DFS(int curr_row, int curr_col, bool visited[N][N], int grid[N][N]){
 }
 ```
 
+
 ### Breath First Search
 
 <i>Pseudocode:</i>
@@ -148,6 +149,22 @@ while(!q.empty()){
     }
 }
 ```
+### Application of Graph Traversal
+
+- [Counting Rooms](https://cses.fi/problemset/task/1192)
+- [Building Roads](https://cses.fi/problemset/task/1666)
+- [Build Teams](https://cses.fi/problemset/task/1668)
+- [Number of Islands](https://leetcode.com/problems/number-of-islands/)
+- [Flight Routes Check](https://cses.fi/problemset/task/1682)
+- [Fence Planning](http://www.usaco.org/index.php?page=viewproblem2&cpid=944)
+
+### Using BFS to find shortest path
+
+- [Message Route](https://cses.fi/problemset/task/1667)
+- [Labyrinth](https://cses.fi/problemset/task/1193)
+- [Monster](https://cses.fi/problemset/task/1194)
+- [Network Delay time](https://leetcode.com/problems/network-delay-time/)
+- [Construct a Palindrome](https://atcoder.jp/contests/abc197/tasks/abc197_f)
 
 ## Shortest Path Algorithms
 ### Dijkstra's Algorithm
@@ -331,8 +348,8 @@ for each edge in graph:
     get [u, v, weight] from edge
     distance[u][v] := weight
 
-for each vertex in graph:
-    distance[vertex][vertex] := 0
+for each vertex v in graph:
+    distance[v][v] := 0
 
 for k from 0 to N-1:
     for u from 0 to N-1:
@@ -375,3 +392,100 @@ for (int k=0;k<N;k++)
             if (distance[u][v] > distance[u][k] + distance[k][v])
                 distance[u][v] = distance[u][k] + distance[k][v];
 ```
+
+<b>Floyd - Warshall on adjacency matrix</b>
+
+```c++
+/*
+    We use adjMat same as a distance array
+    So any edges connect to the same vertex must be set to 0
+    and any edges that do not exist must be set to inf
+*/
+for (int k=0;k<N;k++)
+    for (int u=0;u<N;u++)
+        for (int v=0;v<N;v++)
+            if (adjMat[u][v] > adjMat[u][k] + adjMat[k][v])
+```
+
+### Application of Shortest Path Algorithms
+
+- [Shortest Routes I](https://cses.fi/problemset/task/1671)
+- [Shortest Routes II](https://cses.fi/problemset/task/1672)
+- [Flight Discount](https://cses.fi/problemset/task/1195)
+- [High Score](https://cses.fi/problemset/task/1673)
+- [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops)
+- [Cycle Finding](https://cses.fi/problemset/task/1197)
+- [Longest Flight Route](https://cses.fi/problemset/task/1680)
+
+## Minimum Spanning Tree Algorithms
+
+### Union Find (Disjoint Set) structure
+
+```c++
+struct UnionFind {
+    //Assume that a node is represented as an interger
+    int rank[N];
+    int parent[N];
+
+    UnionFind(){
+        for (int i=0;i<N;i++){
+            rank[i] = 0;
+            parent[i] = i;
+        }
+    }
+
+    int find(int u){
+        if (u == parent[u]) return parent[u];
+        return parent[u] = find(parent[u]);
+    }
+
+    void union(int u, int v){
+        int pu = parent[u], pv = parent[v];
+        if (rank[pu] < rank[pv]) parent[pu] = pv;
+        else if (rank[pu] > rank[pv]) parent[pv] = pu;
+        else{
+            parent[pu] = pv;
+            rank[pv]++;
+        }
+    }
+};
+```
+
+### Kruskal's Algorithm
+
+<i>Pseudocode:</i>
+
+```
+sort all edges according to their weight
+initialize a set with Union Find structure
+
+for each edge in graph:
+    get [u, v, weight] from edge
+    if u and v are not in the same set:
+        union set of u and v
+        add the current edge to the tree
+```
+
+<b>Kruskal on edge list</b>
+
+```c++
+sort(edgeList.begin(), edgeList.end());
+UnionFind UF;
+for (auto &[u, v, weight] : edgeList){
+    if (UF.find(u) != UF.find(v)){
+        UF.union(u, v);
+        /*Add the current edge to the tree*/
+    }
+}
+```
+
+### Prim's Algorithm
+
+<i>We don't talk about Prim's around here boi</i> 🤫
+
+### Application of Minimum Spanning Tree
+
+- [Road Reparation](https://cses.fi/problemset/task/1675)
+- [Superbull](http://www.usaco.org/index.php?page=viewproblem2&cpid=531)
+- [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)
+- [กระเช้าไฟฟ้า](https://programming.in.th/tasks/toi12_cablecar)
